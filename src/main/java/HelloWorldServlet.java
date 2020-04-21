@@ -10,15 +10,21 @@ import java.io.PrintWriter;
 public class HelloWorldServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) {
-        res.setContentType("text/html");
-        PrintWriter out = null;
-        try {
-            out = res.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        out.println("<h1>Hello</h1>");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        String name = request.getParameter("name");
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        if(name != null) {
+            try {
+                out.println("<h1>Hello, " + name + "!</h1>");
+            } catch (RuntimeException e) {
+                response.resetBuffer();
+                response.sendRedirect("/hello");
+            }
+        } else {
+            out.println("<h1>Hello, World!</h1>");
+        }
     }
 }
