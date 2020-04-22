@@ -18,6 +18,5 @@ public class PageCounterServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<h1>The page has been viewed " + count + " times.</h1>");
 
-
     }
 }
